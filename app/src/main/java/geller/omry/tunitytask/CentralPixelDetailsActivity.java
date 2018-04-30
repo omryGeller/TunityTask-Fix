@@ -1,6 +1,7 @@
 package geller.omry.tunitytask;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 /**
  * Created by Omry Geller
  * Date 26/4/18
@@ -32,11 +36,21 @@ public class CentralPixelDetailsActivity extends AppCompatActivity {
         });
 
         TextView pixelDetails=(TextView)findViewById(R.id.pixel_details);
+        TextView title=(TextView)findViewById(R.id.title);
 
         Intent intent=getIntent();
         if(intent != null && intent.hasExtra("CentralPixel")){
             String details=intent.getStringExtra("CentralPixel");
-            pixelDetails.setText(details);
+
+            String[] RGBValues=details.split(",");
+            int r=Integer.valueOf(RGBValues[0]);
+            int g=Integer.valueOf(RGBValues[1]);
+            int b=Integer.valueOf(RGBValues[2]);
+            String titleText=title.getText().toString();
+            title.setText(titleText+"\n"+"R="+r+","+"G="+g+","+"B="+b);
+
+            pixelDetails.setBackgroundColor(Color.rgb(r,g,b));
+
         }
         else {
             pixelDetails.setText("No data go back and calculate again");
